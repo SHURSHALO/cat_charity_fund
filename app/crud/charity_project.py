@@ -36,7 +36,6 @@ class CRUDCharityProject(CRUDBase):
         new_charity_project = await self.create(
             CharityProjectUpgrade(**charity_project), session
         )
-
         return new_charity_project
 
 

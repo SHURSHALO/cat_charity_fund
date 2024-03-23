@@ -11,9 +11,6 @@ class CharityProjectCreate(BaseModel):
 
     class Config:
         extra = Extra.forbid
-
-    class Config:
-        extra = Extra.forbid
         orm_mode = True
 
 

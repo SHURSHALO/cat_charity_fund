@@ -14,7 +14,6 @@ router = APIRouter()
 @router.post(
     '/',
     response_model=DonationDB,
-    response_model_exclude_none=True,
     response_model_exclude={
         'user_id',
         'invested_amount',
@@ -27,10 +26,8 @@ async def create_donation(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user),
 ):
-
-    new_donation = await donation_crud.create_donation(donation, session, user)
-
-    return new_donation
+    """Создание доната"""
+    return await donation_crud.create_donation(donation, session, user)
 
 
 @router.get(
@@ -38,9 +35,8 @@ async def create_donation(
     response_model=list[DonationDB],
 )
 async def get_all_donation(session: AsyncSession = Depends(get_async_session)):
-    '''Только для суперюзеров.'''
-    donation = await donation_crud.get_multi(session)
-    return donation
+    """Только для суперюзеров."""
+    return await donation_crud.get_multi(session)
 
 
 @router.get(
@@ -57,6 +53,5 @@ async def get_my_donation(
     user: User = Depends(current_user),
     session: AsyncSession = Depends(get_async_session),
 ):
-    '''Получает список всех бронирований для текущего пользователя.'''
-    reservations = await donation_crud.get_by_user(user, session)
-    return reservations
+    """Получает список всех донатов текущего пользователя."""
+    return await donation_crud.get_by_user(user, session)
